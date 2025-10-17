@@ -1,13 +1,13 @@
 const empleadoCtrl={};
 const Empleado=require('../models/Empleado');
 
-empleadoCtrl.getEmpleados=(req,res)=>{
+empleadoCtrl.getEmpleados= async(req, res)=>{
+    const empleados= await Empleado.find();
+    res.json(empleados);
     res.send('get empleados')
 }
 
 empleadoCtrl.getEmpleado=(req,res)=>{}
-empleadoCtrl.editEmpleado=(req,res)=>{}
-empleadoCtrl.deleteEmpleado=(req,res)=>{}
 
 
 
@@ -32,7 +32,7 @@ empleadoCtrl.editEmpleado=async(req,res)=>{
     sueldo: req.body.sueldo
     };
     await Empleado.findByIdAndUpdate(_id, {$set:empleado},{new: true});
-    res.json('status: Datos actualizados');
+    res.json('status: Datos actualizados ');
 }
 
 empleadoCtrl.deleteEmpleado=async(req,res)=>{
