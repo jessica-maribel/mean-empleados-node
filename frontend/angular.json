@@ -14,6 +14,9 @@
           "builder": "@angular/build:application",
           "options": {
             "browser": "src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
@@ -22,13 +25,9 @@
               }
             ],
             "styles": [
-              "src/styles.css"
-            ],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
-            "ssr": {
-              "entry": "src/server.ts"
-            }
+              "src/styles.css",
+  "node_modules/bootswatch/dist/morph/bootstrap.min.css"
+            ]
           },
           "configurations": {
             "production": {
@@ -72,6 +71,10 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
               {
@@ -88,6 +91,6 @@
     }
   },
   "cli": {
-    "analytics": "193977c1-8d5c-418e-a514-154b621df326"
+    "analytics": false
   }
 }

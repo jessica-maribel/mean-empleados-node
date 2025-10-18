@@ -1,0 +1,236 @@
+<div class="wrapper">
+  <div class="row g-4">
+    <div class="col-12 col-lg-4">
+      <div class="card border">
+        <div class="card-header bg-white border-bottom">
+          <h5 class="card-title mb-0 text-dark">
+            {{ editingId ? 'Editar Empleado' : 'Nuevo Empleado' }}
+          </h5>
+        </div>
+        
+        <div class="card-body">
+          <form #empleadoForm="ngForm" (ngSubmit)="submit(empleadoForm)">
+            
+            <div class="mb-3">
+              <label class="form-label text-dark">Nombre Completo</label>
+              <input 
+                type="text"
+                class="form-control" 
+                name="nombre"
+                placeholder="Ej: Juan Pintado"
+                [(ngModel)]="empleadoService.selectedEmpleado.nombre" 
+                #nombre="ngModel"
+                required 
+                minlength="3"
+                [class.is-invalid]="nombre.invalid && nombre.touched"
+                [class.is-valid]="nombre.valid && nombre.touched" />
+              <div class="invalid-feedback" *ngIf="nombre.invalid && nombre.touched">
+                <small *ngIf="nombre.errors?.['required']">El nombre es requerido</small>
+                <small *ngIf="nombre.errors?.['minlength']">Debe tener al menos 3 caracteres</small>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label text-dark">Cargo</label>
+              <input 
+                type="text"
+                class="form-control" 
+                name="cargo"
+                placeholder="Ej: Lider "
+                [(ngModel)]="empleadoService.selectedEmpleado.cargo" 
+                #cargo="ngModel"
+                required 
+                minlength="3"
+                [class.is-invalid]="cargo.invalid && cargo.touched"
+                [class.is-valid]="cargo.valid && cargo.touched" />
+              <div class="invalid-feedback" *ngIf="cargo.invalid && cargo.touched">
+                <small *ngIf="cargo.errors?.['required']">El cargo es requerido</small>
+                <small *ngIf="cargo.errors?.['minlength']">Debe tener al menos 3 caracteres</small>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label text-dark">Departamento</label>
+              <input 
+                type="text"
+                class="form-control" 
+                name="departamento"
+                placeholder="Ej: Departamento Tecnología"
+                [(ngModel)]="empleadoService.selectedEmpleado.departamento" 
+                #departamento="ngModel"
+                required 
+                minlength="3"
+                [class.is-invalid]="departamento.invalid && departamento.touched"
+                [class.is-valid]="departamento.valid && departamento.touched" />
+              <div class="invalid-feedback" *ngIf="departamento.invalid && departamento.touched">
+                <small *ngIf="departamento.errors?.['required']">El departamento es requerido</small>
+                <small *ngIf="departamento.errors?.['minlength']">Debe tener al menos 3 caracteres</small>
+              </div>
+            </div>
+            <div class="mb-4">
+              <label class="form-label text-dark">Sueldo </label>
+              <div class="input-group">
+                <span class="input-group-text bg-white border">$</span>
+                <input 
+                  type="number" 
+                  min="0" 
+                  step="0.01"
+                  class="form-control" 
+                  name="sueldo"
+                  placeholder="0.00"
+                  [(ngModel)]="empleadoService.selectedEmpleado.sueldo" 
+                  #sueldo="ngModel"
+                  required
+                  [class.is-invalid]="sueldo.invalid && sueldo.touched"
+                  [class.is-valid]="sueldo.valid && sueldo.touched" />
+              </div>
+              <div class="invalid-feedback d-block" *ngIf="sueldo.invalid && sueldo.touched">
+                <small *ngIf="sueldo.errors?.['required']">El sueldo es requerido</small>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button 
+                type="submit"
+                class="btn btn-dark" 
+                [disabled]="empleadoForm.invalid">
+                {{ editingId ? 'Actualizar' : 'Crear' }}
+              </button>
+              <button 
+                type="button" 
+                class="btn btn-outline-dark"
+                (click)="resetForm(empleadoForm)">
+                Limpiar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-8">
+      <div class="card border">
+        <div class="card-header bg-white border-bottom">
+          <h5 class="card-title mb-0 d-flex align-items-center justify-content-between text-dark">
+            <span>Lista de Empleados</span>
+            <span class="badge bg-dark rounded-pill">
+              {{ empleadoService.empleados.length }}
+            </span>
+          </h5>
+        </div>
+        
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0" *ngIf="empleadoService.empleados.length">
+              <thead class="bg-light">
+                <tr>
+                  <th class="px-4 text-dark">Nombre</th>
+                  <th class="text-dark">Cargo</th>
+                  <th class="text-dark">Departamento</th>
+                  <th class="text-end px-4 text-dark">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let e of empleadoService.empleados">
+                  <td class="px-4">{{ e.nombre }}</td>
+                  <td>{{ e.cargo }}</td>
+                  <td>{{ e.departamento }}</td>
+                  <td class="text-end px-4">
+                    <div class="btn-group btn-group-sm" role="group">
+                      <button 
+                        class="btn btn-outline-dark" 
+                        (click)="editEmpleado(e)">
+                        Editar
+                      </button>
+                      <button 
+                        class="btn btn-outline-danger" 
+                        (click)="deleteEmpleado(e._id)">
+                        Eliminar
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Estado vacío -->
+          <div *ngIf="!empleadoService.empleados.length" class="text-center py-5 text-muted">
+            <p class="mb-0">No hay empleados registrados</p>
+            <small>Agrega un nuevo empleado usando el formulario</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Estilos minimalistas -->
+<style>
+  .card {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  }
+
+  .card-header {
+    padding: 1rem 1.25rem;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .form-control,
+  .input-group-text {
+    border-color: #dee2e6;
+    transition: border-color 0.2s ease;
+  }
+
+  .form-control:focus {
+    border-color: #212529;
+    box-shadow: 0 0 0 0.15rem rgba(33, 37, 41, 0.1);
+  }
+
+  .btn {
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .btn:active {
+    transform: translateY(0);
+  }
+
+  .table thead th {
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.875rem 1rem;
+  }
+
+  .table tbody td {
+    padding: 0.875rem 1rem;
+  }
+
+  .table tbody tr {
+    transition: background-color 0.2s ease;
+  }
+
+  .badge {
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+  }
+
+  /* Responsive */
+  @media (max-width: 992px) {
+    .card-body {
+      padding: 1rem;
+    }
+  }
+</style>

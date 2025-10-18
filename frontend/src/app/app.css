@@ -1,0 +1,20 @@
+.navbar-violet {
+  background: rgba(125, 95, 255, 0.85); /* violeta medio con transparencia */
+  backdrop-filter: blur(8px); /* efecto glassmorphism */
+  color: #fff;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  box-shadow: 0 6px 18px rgba(125, 95, 255, 0.25);
+  transition: all 0.3s ease;
+}
+
+.navbar-violet .navbar-brand {
+  color: #EDE9FF; /* violeta claro para el texto */
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.navbar-violet:hover {
+  box-shadow: 0 8px 24px rgba(125, 95, 255, 0.35);
+  transform: translateY(-2px);
+}

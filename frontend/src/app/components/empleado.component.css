@@ -1,0 +1,220 @@
+/* === Reset y Base === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #4B0082; /* color violeta oscuro */
+  background-color: #F5F3FF; /* fondo lavanda claro */
+  line-height: 1.6;
+}
+
+/* === Header Mejorado === */
+.header {
+  background: rgba(125, 95, 255, 0.8); /* violeta medio con transparencia */
+  backdrop-filter: blur(10px); /* efecto glassmorphism */
+  color: #fff;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  font-size: 1.35rem;
+  font-weight: 700;
+  box-shadow: 0 8px 20px rgba(125, 95, 255, 0.25); /* sombra violeta suave */
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.header:hover {
+  box-shadow: 0 10px 30px rgba(125, 95, 255, 0.35);
+  transform: translateY(-2px);
+}
+
+.header i {
+  margin-right: 0.75rem;
+  font-size: 1.6rem;
+  color: #EDE9FF; /* iconos ligeramente más claros */
+  transition: color 0.3s ease;
+}
+
+.header i:hover {
+  color: #fff;
+}
+
+
+/* === Container === */
+.container {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+/* === Título === */
+h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #5F3DC4; /* violeta intenso */
+  text-align: center;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #DCD0FF;
+  padding-bottom: 0.5rem;
+}
+
+/* === Tarjetas / Secciones === */
+.card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 4px 12px rgba(125, 95, 255, 0.15);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(125, 95, 255, 0.25);
+}
+
+.card-header {
+  background: #EDE9FF; /* violeta muy claro */
+  padding: 1.25rem;
+  border-bottom: 1px solid #D0C4FF;
+  font-weight: 600;
+  color: #4B0082;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+/* === Tabla === */
+.table-responsive {
+  overflow-x: auto;
+  border-radius: 8px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+}
+
+thead {
+  background-color: #7D5FFF; /* violeta medio */
+  color: #ffffff;
+}
+
+thead th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.5px;
+}
+
+tbody td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #E0D7FF;
+  font-size: 0.9rem;
+}
+
+tbody tr:hover {
+  background-color: #F0EFFF;
+  transition: background-color 0.2s ease;
+}
+
+/* === Botones === */
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.btn-dark {
+  background-color: #4B0082;
+  color: #fff;
+}
+
+.btn-dark:hover {
+  background-color: #2E004D;
+}
+
+.btn-outline-dark {
+  background-color: #fff;
+  border: 1px solid #4B0082;
+  color: #4B0082;
+}
+
+.btn-outline-dark:hover {
+  background-color: #4B0082;
+  color: #fff;
+}
+
+.btn-outline-danger {
+  background-color: #fff;
+  border: 1px solid #7D5FFF;
+  color: #7D5FFF;
+}
+
+.btn-outline-danger:hover {
+  background-color: #7D5FFF;
+  color: #fff;
+}
+
+/* === Formulario === */
+.form-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #4B0082;
+}
+
+.form-control {
+  width: 100%;
+  border: 1px solid #D0C4FF;
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.form-control:focus {
+  border-color: #7D5FFF;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(125, 95, 255, 0.2);
+}
+
+/* === Responsividad === */
+@media (max-width: 768px) {
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tbody td {
+    display: block;
+    text-align: right;
+    position: relative;
+    padding: 0.75rem 1rem;
+  }
+
+  tbody td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 1rem;
+    font-weight: 600;
+    color: #7D5FFF;
+  }
+}

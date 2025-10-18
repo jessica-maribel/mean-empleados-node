@@ -2,13 +2,25 @@ const empleadoCtrl={};
 const Empleado=require('../models/Empleado');
 
 empleadoCtrl.getEmpleados= async(req, res)=>{
-    const empleados= await Empleado.find();
-    res.json(empleados);
-    res.send('get empleados')
+  try {
+    const empleados = await Empleado.find();
+    res.json(empleados); 
+    res.send("Listo");  
+  } catch (error) {
+    res.status(500).json({ message: error.message }); 
+  }
 }
 
-empleadoCtrl.getEmpleado=(req,res)=>{}
-
+empleadoCtrl.getEmpleado = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const emp = await Empleado.findById(id);
+    if (!emp) return res.status(404).json({ message: 'Empleado no encontrado' });
+    res.json(emp);
+  } catch (err) {
+    res.status(500).json({ message: 'Error al obtener empleado', error: err.message });
+  }
+};
 
 
 empleadoCtrl.createEmpleado= async(req,res)=>{
@@ -24,20 +36,30 @@ empleadoCtrl.createEmpleado= async(req,res)=>{
 }
 
 empleadoCtrl.editEmpleado=async(req,res)=>{
-    const {_id}=req.params;
-    const empleado={
-    nombre: req.body.nombre,
-    cargo: req.body.cargo,
-    departamento: req.body.departamento,
-    sueldo: req.body.sueldo
-    };
-    await Empleado.findByIdAndUpdate(_id, {$set:empleado},{new: true});
-    res.json('status: Datos actualizados ');
+    try {
+    const { id } = req.params;
+    const { nombre, cargo, departamento, sueldo } = req.body;
+    const actualizado = await Empleado.findByIdAndUpdate(
+      id,
+      { $set: { nombre, cargo, departamento, sueldo } },
+      { new: true }
+    );
+    if (!actualizado) return res.status(404).json({ message: 'Empleado no encontrado' });
+    res.json({ status: 'Datos actualizados', empleado: actualizado });
+  } catch (err) {
+    res.status(400).json({ message: 'Error al actualizar', error: err.message });
+  }
 }
 
 empleadoCtrl.deleteEmpleado=async(req,res)=>{
-    await Empleado.findByIdAndRemove(req.params.id);
-    res.json('status: Empleado ha sido removido');
+    try {
+    const { id } = req.params;
+    const eliminado = await Empleado.findByIdAndDelete(id);
+    if (!eliminado) return res.status(404).json({ message: 'Empleado no encontrado' });
+    res.json({ status: 'Empleado ha sido removido' });
+  } catch (err) {
+    res.status(400).json({ message: 'Error al eliminar', error: err.message });
+  }
 }
 
 module.exports=empleadoCtrl;
