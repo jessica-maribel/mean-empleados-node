@@ -69,7 +69,7 @@ export class EmpleadoComponent implements OnInit {
   // Eliminar
   deleteEmpleado(id?: string): void {
     if (!id) return;
-    if (!confirm('¿Seguro que deseas eliminar este empleado?')) return;
+    if (!confirm('¿Deseas eliminar este empleado?')) return;
     
     this.empleadoService.deleteEmpleado(id).subscribe({
       next: () => this.getEmpleados(),
