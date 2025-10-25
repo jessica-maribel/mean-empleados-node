@@ -1,5 +1,5 @@
 const empleadoCtrl={};
-const Empleado=require('../models/Empleado');
+const Empleado=require('../models/empleado');
 
 empleadoCtrl.getEmpleados = async (req, res) => {
   try {
