@@ -11,31 +11,33 @@
         <div class="card-body">
           <form #empleadoForm="ngForm" (ngSubmit)="submit(empleadoForm)">
             
+            <!-- Campo Nombre -->
             <div class="mb-3">
-              <label class="form-label text-dark">Nombres y Apellidos</label>
+              <label class="form-label text-dark">Nombre Completo</label>
               <input 
                 type="text"
                 class="form-control" 
                 name="nombre"
-                placeholder="Ej: Juan Pintado"
+                placeholder="Ej: Juan Santos"
                 [(ngModel)]="empleadoService.selectedEmpleado.nombre" 
                 #nombre="ngModel"
                 required 
                 minlength="3"
-                 />
+                />
               <div class="invalid-feedback" *ngIf="nombre.invalid && nombre.touched">
                 <small *ngIf="nombre.errors?.['required']">El nombre es requerido</small>
                 <small *ngIf="nombre.errors?.['minlength']">Debe tener al menos 3 caracteres</small>
               </div>
             </div>
 
+            <!-- Campo Cargo -->
             <div class="mb-3">
               <label class="form-label text-dark">Cargo</label>
               <input 
                 type="text"
                 class="form-control" 
                 name="cargo"
-                placeholder="Ej: Lider "
+                placeholder="Ej: TI"
                 [(ngModel)]="empleadoService.selectedEmpleado.cargo" 
                 #cargo="ngModel"
                 required 
@@ -47,28 +49,34 @@
               </div>
             </div>
 
+            <!-- Campo Departamento -->
             <div class="mb-3">
               <label class="form-label text-dark">Departamento</label>
               <input 
                 type="text"
                 class="form-control" 
                 name="departamento"
-                placeholder="Ej: Departamento Tecnología"
+                placeholder="Ej: Tecnología"
                 [(ngModel)]="empleadoService.selectedEmpleado.departamento" 
                 #departamento="ngModel"
                 required 
-                minlength="3"/>
+                minlength="3"
+                />
               <div class="invalid-feedback" *ngIf="departamento.invalid && departamento.touched">
                 <small *ngIf="departamento.errors?.['required']">El departamento es requerido</small>
-                <small *ngIf="departamento.errors?.['minlength']">Debe tener al menos 4 caracteres</small>
+                <small *ngIf="departamento.errors?.['minlength']">Debe tener al menos 3 caracteres</small>
               </div>
             </div>
+
+            <!-- Campo Sueldo -->
             <div class="mb-4">
-              <label class="form-label text-dark">Sueldo </label>
+              <label class="form-label text-dark">Sueldo Mensual</label>
               <div class="input-group">
-                <!-- <span class="input-group-text bg-white border">$</span> -->
+                <span class="input-group-text bg-white border">$</span>
                 <input 
                   type="number" 
+                  min="0" 
+                  step="0.01"
                   class="form-control" 
                   name="sueldo"
                   placeholder="0.00"
@@ -83,19 +91,20 @@
               </div>
             </div>
 
-            <div class="d-grid">
+            <!-- Botones de acción -->
+            <div class="d-grid gap-2">
               <button 
                 type="submit"
                 class="btn btn-dark" 
                 [disabled]="empleadoForm.invalid">
-                {{ editingId ? 'ACTUALIZAR' : 'CREAR' }}
+                {{ editingId ? 'Actualizar' : 'Crear' }}
               </button>
-              <!-- <button 
+              <button 
                 type="button" 
                 class="btn btn-outline-dark"
                 (click)="resetForm(empleadoForm)">
                 Limpiar
-              </button> -->
+              </button>
             </div>
           </form>
         </div>
